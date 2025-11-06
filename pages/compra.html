@@ -2,9 +2,8 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Loja de Jogos</title>
-    <link rel="stylesheet" href="style.css">
-    
+    <title>Compra - Loja de Jogos</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
@@ -13,30 +12,56 @@
         <div class="logo">
             <h1>Loja de Jogos</h1>
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Início</a></li>
-            </ul>
-        </nav>
     </header>
 
     <div class="exemplo">
-
-        <div class="linha-exemplo"><h3>Nome:</h3> <h3>João da Silva</h3></div>
-
-        <div class="linha-exemplo"><h3 class="item-exemplo">Email:</h3> <h3>jao123@gmail.com</h3></div>
-
-        <div class="linha-exemplo"><h3 class="item-exemplo">Endereço:</h3> <h3>Rua general 44</h3></div>
-
-        <div class="linha-exemplo"><h3 class="item-exemplo">Produto:</h3> <h3>Bioshock</h3></div>
-
-        <div class="linha-exemplo"><h3 class="item-exemplo">Valor:</h3> <h3>R$39,00</h3></div>
+        <div class="linha-exemplo"><h3>Nome:</h3> <h3 id="nome_usuario_compra"></h3></div>
+        <div class="linha-exemplo"><h3>Email:</h3> <h3 id="email_compra"></h3></div>
+        <div class="linha-exemplo"><h3>Endereço:</h3> <h3 id="endereco_compra"></h3></div>
+        <div class="linha-exemplo"><h3>Produto:</h3> <h3 id="nome_compra"></h3></div>
+        <div class="linha-exemplo"><h3>Valor:</h3> <h3 id="valor_compra"></h3></div>
     </div>
-    <h2 class="finalizada"> Sua compra foi finalizada!</h2></div>
+
+    <h2 class="finalizada">Sua compra foi finalizada!</h2>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Recuperar os dados do cliente e do produto do localStorage
+            const nomeCliente = localStorage.getItem("cliente_nome");
+            const emailCliente = localStorage.getItem("cliente_email");
+            const enderecoCliente = localStorage.getItem("cliente_endereco");
+            const nomeProduto = localStorage.getItem("produto_nome");
+            const precoProduto = localStorage.getItem("produto_preco");
+
+            // Verificar se todos os dados estão disponíveis
+            if (nomeCliente && emailCliente && enderecoCliente && nomeProduto && precoProduto) {
+                // Preencher as informações do cliente na página
+                document.getElementById("nome_usuario_compra").textContent = nomeCliente;
+                document.getElementById("email_compra").textContent = emailCliente;
+                document.getElementById("endereco_compra").textContent = enderecoCliente;
+
+                // Preencher as informações do produto na página
+                document.getElementById("nome_compra").textContent = nomeProduto;
+                document.getElementById("valor_compra").textContent = "R$ " + precoProduto;
+
+                // Mensagem de confirmação
+                document.querySelector(".finalizada").textContent = `Sua compra de ${nomeProduto} foi finalizada com sucesso!`;
+            } else {
+                // Caso os dados não existam no localStorage, redirecionar de volta para o login
+                window.location.href = "login.html";
+            }
+        });
+    </script>
+
+    <div class="btn-home">
+        <a href="index.html">
+          <button class="federant-regular"><i class="fas fa-home"></i> Home</button>
+        </a>
+    
+    </div>
     <!-- Rodapé -->
     <footer>
         <p>&copy; 2025 Loja de Jogos. Todos os direitos reservados.</p>
     </footer>
 
 </body>
-</html>

@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - Loja de Jogos</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     
 </head>
 <body>
 
+  <header>
+    <div class="logo">
+      <img id="img_logo" src="../img/logo.png" alt="Logo">
+      <h1 class="federant-regular"><b>Os Melhores Jogos Você Encontra Aqui!</b></h1>
+    </div>
+    <nav>
+      <ul>
+        <li class="federant-regular"><a href="acessorios.html"><u>Acessórios</u></a></li>
+        <li class="federant-regular"><a href="jogos.html"><u>Jogos</u></a></li>
+      </ul>
+    </nav>
+
+  </header>
+
     <!-- Modal de Compra com FORM -->
   <div id="modal-compra" class="modal">
     <div class="modal-content">
-      <span id="fechar-modal">&times;</span>
       
       <form id="form-compra">
         <img id="modal-img" src="" alt="">
@@ -36,15 +49,80 @@
         <input type="hidden" name="produto">
         <input type="hidden" name="valor">
 
-        <button type="submit" src="login.html">Finalizar Compra</button>
+        <button type="submit" id="fechar-modal" href="compra.html">Finalizar Compra</button>
       </form>
     </div>
   </div>
 
+    
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Recuperando as informações do localStorage
+        const nome = localStorage.getItem("produto_nome");
+        const preco = localStorage.getItem("produto_preco");
+        const img = localStorage.getItem("produto_img");
+    
+        // Verificando se os dados estão no localStorage
+        if (nome && preco && img) {
+            // Selecionando os elementos do modal
+            const modalNome = document.getElementById("modal-nome");
+            const modalPreco = document.getElementById("modal-preco");
+            const modalImg = document.getElementById("modal-img");
+    
+            // Atualizando o modal com os dados do produto
+            modalNome.textContent = nome;
+            modalPreco.textContent = "Preço: R$ " + preco;
+            modalImg.src = img;
+    
+            // Preenchendo o formulário de compra
+            const formCompra = document.getElementById("form-compra");
+            if (formCompra) {
+                formCompra.produto.value = nome;
+                formCompra.valor.value = preco;
+            }
+    
+            // Quando o formulário for enviado
+            const buttonFinalizarCompra = document.getElementById("fechar-modal");
+            buttonFinalizarCompra.addEventListener("click", (e) => {
+                e.preventDefault(); // Impede o recarregamento da página
+    
+                // Coletando dados do formulário
+                const nomeCliente = formCompra.cliente.value;
+                const emailCliente = formCompra.email.value;
+                const enderecoCliente = formCompra.endereco.value;
+                const produto = formCompra.produto.value;
+                const valor = formCompra.valor.value;
+    
+                // Armazenando as informações no localStorage
+                localStorage.setItem("cliente_nome", nomeCliente);
+                localStorage.setItem("cliente_email", emailCliente);
+                localStorage.setItem("cliente_endereco", enderecoCliente);
+    
+                // Redirecionando para a página de confirmação de compra
+                window.location.href = "compra.html"; // Substitua com a página de confirmação
+            });
+    
+        } else {
+            // Se não houver dados no localStorage, mostrar um alerta ou redirecionar
+            alert("Nenhum produto selecionado!");
+            window.location.href = "index.html";  // Redireciona para a página inicial
+        }
+    });
+    
+
+    </script>
     <!-- Rodapé -->
     <footer>
-        <p>&copy; 2025 Loja de Jogos. Todos os direitos reservados.</p>
-    </footer>
+      <p>&copy; 2025 Loja de Jogos. Todos os direitos reservados.</p>
+  </footer>
+
+  <div class="btn-home">
+    <a href="index.html">
+      <button class="federant-regular"><i class="fas fa-home"></i> Home</button>
+    </a>
+
+</div>
 
 </body>
 </html>

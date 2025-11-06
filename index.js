@@ -1,49 +1,22 @@
-const produtos = document.querySelectorAll(".produto");
-const modal = document.getElementById("modal-compra");
-const fechar = document.getElementById("fechar-modal");
-const modalNome = document.getElementById("modal-nome");
-const modalPreco = document.getElementById("modal-preco");
-const modalImg = document.getElementById("modal-img");
-const formCompra = document.getElementById("form-compra");
+// global.js
 
-produtos.forEach(produto => {
-    produto.addEventListener("click", () => {
-    const nome = produto.getAttribute("data-nome");
-    const preco = produto.getAttribute("data-preco");
-    const img = produto.getAttribute("data-img");
+document.addEventListener("DOMContentLoaded", () => {
+    const produtos = document.querySelectorAll(".produto");
 
-    modalNome.textContent = nome;
-    modalPreco.textContent = "Preço: R$ " + preco;
-    modalImg.src = img;
+    produtos.forEach(produto => {
+        produto.addEventListener("click", () => {
+            // Pegando os dados do produto
+            const nome = produto.getAttribute("data-nome");
+            const preco = produto.getAttribute("data-preco");
+            const img = produto.getAttribute("data-img");
 
-    formCompra.produto.value = nome;
-    formCompra.valor.value = preco;
+            // Armazenando as informações no localStorage
+            localStorage.setItem("produto_nome", nome);
+            localStorage.setItem("produto_preco", preco);
+            localStorage.setItem("produto_img", img);
 
-    modal.style.display = "flex";
+            // Redirecionando para a página de login
+            window.location.href = "login.html";
+        });
     });
 });
-
-fechar.addEventListener("click", () => {
-    modal.style.display = "none";
-});
-
-formCompra.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const nomeCliente = formCompra.cliente.value;
-    const emailCliente = formCompra.email.value;
-    const enderecoCliente = formCompra.endereco.value;
-    const produto = formCompra.produto.value;
-    const valor = formCompra.valor.value;
-
-    alert(
-        `Compra finalizada!
-        Cliente: ${nomeCliente}
-        Email: ${emailCliente}
-        Endereço: ${enderecoCliente}
-        Produto: ${produto}
-        Valor: R$ ${valor}`
-    );
-    
-    formCompra.reset();
-});
-
